@@ -1,28 +1,40 @@
-# Starfall: Beyond the Stars — mod metadata
-# Values in ${...} are filled from gradle.properties at build time.
+# Starfall: Beyond the Stars - mod metadata
+# Values like ${mod_id} are filled from gradle.properties at build time.
 
-modLoader="javafml"
-loaderVersion="${loader_version_range}"
+modLoader="javafml" #mandatory
+
+loaderVersion="${loader_version_range}" #mandatory
+
 license="${mod_license}"
-issueTrackerURL="${mod_issues_url}"
 
-[[mods]]
-modId="${mod_id}"
-version="${mod_version}"
-displayName="${mod_name}"
-displayURL="${mod_url}"
-#logoFile="starfall.png"
-authors="${mod_authors}"
-description='''${mod_description}'''
+issueTrackerURL="${mod_issues_url}" #optional
+
+[[mods]] #mandatory
+
+modId="${mod_id}" #mandatory
+
+version="${mod_version}" #mandatory
+
+displayName="${mod_name}" #mandatory
+
+displayURL="${mod_url}" #optional
+
+#logoFile="starfall.png" #optional
+
+authors="${mod_authors}" #optional
+
+description='''
+${mod_description}
+'''
 
 # Mixins (uncomment when needed)
 #[[mixins]]
 #config="${mod_id}.mixins.json"
 
-[[dependencies.${mod_id}]]
-    modId="neoforge"
-    type="required"
-    versionRange="[${neo_version},)"
+[[dependencies.${mod_id}]] #optional
+    modId="neoforge" #mandatory
+    type="required" #mandatory
+    versionRange="[${neo_version},)" #mandatory
     ordering="NONE"
     side="BOTH"
 
