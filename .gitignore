@@ -6,26 +6,35 @@ build/
 .gradle/
 out/
 repo/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
 
 # ===== NeoForge / Minecraft runs =====
 run/
 runs/
 run-data/
+!**/src/**/run/
+**/src/generated/**/.cache/
 
 # ===== IntelliJ IDEA =====
 .idea/
 *.iml
 *.ipr
 *.iws
+.run/
 
 # ===== Eclipse =====
 bin/
+!**/src/**/bin/
 eclipse/
+.eclipse/
 *.launch
 .settings/
 .metadata/
 .classpath
 .project
+.apt_generated
+.factorypath
 
 # ===== VS Code =====
 .vscode/

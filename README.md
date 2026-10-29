@@ -7,9 +7,11 @@
 
 **Starfall: Beyond the Stars** is a space exploration mod for Minecraft. Build your own modular spaceship, fly it with a friend, survive hostile environments, and witness rare cosmic events, both among the stars and back home in the Overworld.
 
+> ⚠️ **Early development.** Most features below are planned and not yet implemented.
+
 ---
 
-## Planned Features
+## ✨ Planned Features
 
 ### 🚀 Modular Spaceships
 - Build ships piece by piece: **engines, fuel tanks, batteries, solar panels, onboard computers, seats and habitable modules**.
@@ -90,12 +92,6 @@ cd Starfall-Beyond-the-Stars
 ```
 
 On Windows, use `gradlew.bat` instead of `./gradlew`.
-
----
-
-## 🗺️ Roadmap
-
-Development is split into phases, from the technical foundation to the v1.0 release. Check [ROADMAP.md](ROADMAP.md) for details and progress.
 
 ---
 

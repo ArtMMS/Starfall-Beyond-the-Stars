@@ -1,0 +1,34 @@
+# Starfall: Beyond the Stars — mod metadata
+# Values in ${...} are filled from gradle.properties at build time.
+
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+issueTrackerURL="${mod_issues_url}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+displayURL="${mod_url}"
+#logoFile="starfall.png"
+authors="${mod_authors}"
+description='''${mod_description}'''
+
+# Mixins (uncomment when needed)
+#[[mixins]]
+#config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
