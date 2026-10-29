@@ -1,2 +1,31 @@
 {
+  "itemGroup.starfall": "Starfall: Beyond the Stars",
+
+  "item.starfall.star_fragment": "Star Fragment",
+  "block.starfall.star_fragment_block": "Block of Star Fragments",
+
+  "message.starfall.star_fragment.hum": "The fragment hums with a distant light...",
+
+  "starfall.configuration.title": "Starfall Settings",
+  "starfall.configuration.section.starfall.common.toml": "Starfall Settings",
+  "starfall.configuration.section.starfall.common.toml.title": "Starfall Settings",
+
+  "starfall.configuration.events": "Events",
+  "starfall.configuration.enableSpaceEvents": "Enable Space Events",
+  "starfall.configuration.enableOverworldEvents": "Enable Overworld Events",
+  "starfall.configuration.eventCheckInterval": "Event Check Interval (ticks)",
+  "starfall.configuration.meteorCloudChance": "Meteor Cloud Chance",
+  "starfall.configuration.alienRaidChance": "Alien Raid Chance",
+  "starfall.configuration.lostShipChance": "Lost Ship Chance",
+  "starfall.configuration.fallingMeteorChance": "Falling Meteor Chance",
+  "starfall.configuration.alienAbductionChance": "Alien Abduction Chance",
+  "starfall.configuration.crashingShipChance": "Crashing Ship Chance",
+
+  "starfall.configuration.consumption": "Consumption",
+  "starfall.configuration.fuelConsumption": "Fuel Consumption",
+  "starfall.configuration.energyConsumption": "Energy Consumption",
+  "starfall.configuration.oxygenConsumption": "Oxygen Consumption",
+
+  "starfall.configuration.difficulty": "Difficulty",
+  "starfall.configuration.moduleDamage": "Ship Module Damage"
 }
