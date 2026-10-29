@@ -1,0 +1,43 @@
+# ===== Starfall: arquivos locais =====
+ROADMAP.md
+
+# ===== Gradle =====
+build/
+.gradle/
+out/
+repo/
+
+# ===== NeoForge / Minecraft runs =====
+run/
+runs/
+run-data/
+
+# ===== IntelliJ IDEA =====
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# ===== Eclipse =====
+bin/
+eclipse/
+*.launch
+.settings/
+.metadata/
+.classpath
+.project
+
+# ===== VS Code =====
+.vscode/
+!.vscode/extensions.json
+
+# ===== Sistema operacional =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Logs e temporários =====
+*.log
+logs/
+*.tmp
+*.bak
