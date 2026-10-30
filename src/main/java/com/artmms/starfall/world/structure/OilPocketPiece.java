@@ -106,10 +106,27 @@ public class OilPocketPiece extends StructurePiece {
                     pos.set(x, y, z);
                     if (level.getBlockState(pos).is(BlockTags.BASE_STONE_OVERWORLD)) {
                         level.setBlock(pos, oil, 2);
+                        // Oil touching a cave must flow (like lava), not hang in the air:
+                        // world generation doesn't update fluids, so we ask for an update
+                        if (touchesOpenSpace(level, pos)) {
+                            level.scheduleTick(pos.immutable(), ModFluids.CRUDE_OIL.get(), 1);
+                        }
                     }
                 }
             }
         }
+    }
+
+    /** True if any neighbor is air (or something the oil can flow into). */
+    private static boolean touchesOpenSpace(WorldGenLevel level, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockPos neighbor = pos.relative(direction);
+            BlockState state = level.getBlockState(neighbor);
+            if (state.isAir() || (state.canBeReplaced() && level.getFluidState(neighbor).isEmpty())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** 2 to 5 tar patches on the ground right above the pocket. */

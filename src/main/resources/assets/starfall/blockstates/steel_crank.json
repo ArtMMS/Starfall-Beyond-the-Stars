@@ -1,34 +1,7 @@
 {
   "variants": {
-    "rotation=0": {
+    "": {
       "model": "starfall:block/steel_crank_0"
-    },
-    "rotation=1": {
-      "model": "starfall:block/steel_crank_45"
-    },
-    "rotation=2": {
-      "model": "starfall:block/steel_crank_0",
-      "y": 90
-    },
-    "rotation=3": {
-      "model": "starfall:block/steel_crank_45",
-      "y": 90
-    },
-    "rotation=4": {
-      "model": "starfall:block/steel_crank_0",
-      "y": 180
-    },
-    "rotation=5": {
-      "model": "starfall:block/steel_crank_45",
-      "y": 180
-    },
-    "rotation=6": {
-      "model": "starfall:block/steel_crank_0",
-      "y": 270
-    },
-    "rotation=7": {
-      "model": "starfall:block/steel_crank_45",
-      "y": 270
     }
   }
 }

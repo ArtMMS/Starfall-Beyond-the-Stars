@@ -4,6 +4,7 @@ import org.joml.Vector3f;
 
 import com.artmms.starfall.block.entity.ModBlockEntities;
 import com.artmms.starfall.client.FluidTankRenderer;
+import com.artmms.starfall.client.SteelCrankRenderer;
 import com.artmms.starfall.fluid.ModFluids;
 import com.artmms.starfall.item.ModItems;
 import com.mojang.blaze3d.shaders.FogShape;
@@ -97,6 +98,7 @@ public class StarfallClient {
     @SubscribeEvent
     static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK.get(), FluidTankRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.STEEL_CRANK.get(), SteelCrankRenderer::new);
     }
 
     /** Paints the liquid inside the vanilla bucket model with the fluid's color (black for crude oil). */

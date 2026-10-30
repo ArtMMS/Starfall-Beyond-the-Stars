@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 /**
  * Iron Pipe: connects automatically like a fence, but in all 6 directions
  * (so it can go straight up from an extractor). It only connects to other pipes,
- * Fluid Tanks, extractors and the Steel Crank. Pipes don't move fluid by
+ * Fluid Tanks, extractors and the Steel Crank (only on the side the crank is attached to). Pipes don't move fluid by
  * themselves: the Steel Crank pumps through them.
  */
 public class IronPipeBlock extends PipeBlock {
@@ -51,23 +51,30 @@ public class IronPipeBlock extends PipeBlock {
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
                                      LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        return state.setValue(PROPERTY_BY_DIRECTION.get(direction), connectsTo(neighborState));
+        return state.setValue(PROPERTY_BY_DIRECTION.get(direction), connectsTo(neighborState, direction));
     }
 
     private BlockState withConnections(BlockGetter level, BlockPos pos, BlockState state) {
         for (Direction direction : Direction.values()) {
             BlockState neighbor = level.getBlockState(pos.relative(direction));
-            state = state.setValue(PROPERTY_BY_DIRECTION.get(direction), connectsTo(neighbor));
+            state = state.setValue(PROPERTY_BY_DIRECTION.get(direction), connectsTo(neighbor, direction));
         }
         return state;
     }
 
-    /** What a pipe can connect to. */
-    public static boolean connectsTo(BlockState state) {
+    /**
+     * What a pipe can connect to.
+     *
+     * @param toNeighbor direction from the pipe to the neighbor
+     */
+    public static boolean connectsTo(BlockState state, Direction toNeighbor) {
         Block block = state.getBlock();
+        // A crank only connects to the one pipe it's attached to
+        if (block instanceof SteelCrankBlock) {
+            return state.getValue(SteelCrankBlock.FACING) == toNeighbor.getOpposite();
+        }
         return block instanceof IronPipeBlock
                 || block instanceof FluidTankBlock
-                || block instanceof OilExtractorBlock
-                || block instanceof SteelCrankBlock;
+                || block instanceof OilExtractorBlock;
     }
 }

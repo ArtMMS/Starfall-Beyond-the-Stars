@@ -8,8 +8,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 /**
- * Exposes Starfall tanks as standard NeoForge fluid handlers, so buckets,
- * pipes and other mods can interact with them.
+ * Exposes the Fluid Tank as a standard NeoForge fluid handler, so buckets
+ * and other mods can interact with it.
  */
 @EventBusSubscriber(modid = Starfall.MODID, bus = EventBusSubscriber.Bus.MOD)
 public final class ModCapabilities {
@@ -20,8 +20,5 @@ public final class ModCapabilities {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.FLUID_TANK.get(),
                 (tank, side) -> tank.getTank());
-
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.OIL_EXTRACTOR.get(),
-                (extractor, side) -> extractor.getTank());
     }
 }

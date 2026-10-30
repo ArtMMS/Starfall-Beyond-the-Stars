@@ -19,9 +19,10 @@ public final class ModBlockEntities {
                     .of(FluidTankBlockEntity::new, ModBlocks.FLUID_TANK.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OilExtractorBlockEntity>> OIL_EXTRACTOR =
-            BLOCK_ENTITIES.register("oil_extractor", () -> BlockEntityType.Builder
-                    .of(OilExtractorBlockEntity::new, ModBlocks.OIL_EXTRACTOR.get())
+    /** Only keeps the spin animation timing (synced to clients). */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SteelCrankBlockEntity>> STEEL_CRANK =
+            BLOCK_ENTITIES.register("steel_crank", () -> BlockEntityType.Builder
+                    .of(SteelCrankBlockEntity::new, ModBlocks.STEEL_CRANK.get())
                     .build(null));
 
     private ModBlockEntities() {

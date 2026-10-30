@@ -29,8 +29,6 @@ public final class StarfallConfig {
 
     // ===== Machines =====
     public static final ModConfigSpec.IntValue BASIC_TANK_CAPACITY;
-    public static final ModConfigSpec.IntValue EXTRACTOR_CAPACITY;
-    public static final ModConfigSpec.IntValue EXTRACTOR_TICKS_PER_BUCKET;
     public static final ModConfigSpec.IntValue CRANK_PUMP_AMOUNT;
     public static final ModConfigSpec.IntValue EXTRACTOR_RANGE;
 
@@ -90,15 +88,9 @@ public final class StarfallConfig {
         BASIC_TANK_CAPACITY = builder
                 .comment("Capacity of the Fluid Tank, in mB (1000 mB = 1 bucket)")
                 .defineInRange("basicTankCapacity", 16000, 1000, 1000000);
-        EXTRACTOR_CAPACITY = builder
-                .comment("Internal tank of the Oil Extractor, in mB")
-                .defineInRange("extractorCapacity", 4000, 1000, 100000);
-        EXTRACTOR_TICKS_PER_BUCKET = builder
-                .comment("Ticks the Oil Extractor takes to pull 1 bucket by itself. 20 ticks = 1 second")
-                .defineInRange("extractorTicksPerBucket", 200, 1, 72000);
         CRANK_PUMP_AMOUNT = builder
-                .comment("How much each Steel Crank turn pumps into every connected tank, in mB (1000 = 1 bucket)")
-                .defineInRange("crankPumpAmount", 1000, 1, 100000);
+                .comment("How much each Steel Crank turn pumps into every connected tank, in mB. Whole buckets only (1000 = 1 bucket)")
+                .defineInRange("crankPumpAmount", 1000, 1000, 100000);
         EXTRACTOR_RANGE = builder
                 .comment("How far (in blocks) the Oil Extractor reaches into a connected pocket or pool")
                 .defineInRange("extractorRange", 8, 1, 32);
