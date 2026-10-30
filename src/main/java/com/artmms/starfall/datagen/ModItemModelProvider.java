@@ -20,5 +20,6 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.STAR_FRAGMENT.get());
+        basicItem(ModItems.ROCKET.get());
     }
 }

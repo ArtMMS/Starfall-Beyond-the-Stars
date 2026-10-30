@@ -2,6 +2,7 @@ package com.artmms.starfall.network;
 
 import com.artmms.starfall.Starfall;
 import com.artmms.starfall.client.ClientPayloadHandler;
+import com.artmms.starfall.entity.rocket.RocketEntity;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -27,5 +28,9 @@ public final class StarfallNetwork {
         // so it is never loaded on a dedicated server.
         registrar.playToClient(AlertPayload.TYPE, AlertPayload.STREAM_CODEC,
                 (payload, context) -> context.enqueueWork(() -> ClientPayloadHandler.handleAlert(payload)));
+
+        // Client -> server: rocket control panel buttons
+        registrar.playToServer(RocketActionPayload.TYPE, RocketActionPayload.STREAM_CODEC,
+                (payload, context) -> context.enqueueWork(() -> RocketEntity.handleAction(context.player(), payload)));
     }
 }

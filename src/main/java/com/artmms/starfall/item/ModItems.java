@@ -21,6 +21,10 @@ public final class ModItems {
             ITEMS.register("crude_oil_bucket", () -> new BucketItem(ModFluids.CRUDE_OIL.get(),
                     new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
+    /** Places a rocket on a flat 5x5 pad (no recipe yet). */
+    public static final DeferredItem<RocketItem> ROCKET =
+            ITEMS.register("rocket", () -> new RocketItem(new Item.Properties().stacksTo(1)));
+
     private ModItems() {
     }
 

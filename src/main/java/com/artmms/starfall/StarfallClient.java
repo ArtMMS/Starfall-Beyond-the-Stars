@@ -4,7 +4,10 @@ import org.joml.Vector3f;
 
 import com.artmms.starfall.block.entity.ModBlockEntities;
 import com.artmms.starfall.client.FluidTankRenderer;
+import com.artmms.starfall.client.RocketRenderer;
+import com.artmms.starfall.client.StarfallKeys;
 import com.artmms.starfall.client.SteelCrankRenderer;
+import com.artmms.starfall.entity.ModEntities;
 import com.artmms.starfall.fluid.ModFluids;
 import com.artmms.starfall.item.ModItems;
 import com.mojang.blaze3d.shaders.FogShape;
@@ -22,6 +25,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
@@ -94,11 +98,18 @@ public class StarfallClient {
         }, ModFluids.CRUDE_OIL_TYPE.get());
     }
 
-    /** Draws the liquid inside the Fluid Tank glass. */
+    /** Draws the liquid inside the Fluid Tank glass, the crank and the rocket. */
     @SubscribeEvent
     static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK.get(), FluidTankRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.STEEL_CRANK.get(), SteelCrankRenderer::new);
+        event.registerEntityRenderer(ModEntities.ROCKET.get(), RocketRenderer::new);
+    }
+
+    /** R (by default): opens the rocket panel while seated. */
+    @SubscribeEvent
+    static void registerKeys(RegisterKeyMappingsEvent event) {
+        event.register(StarfallKeys.ROCKET_CONTROLS);
     }
 
     /** Paints the liquid inside the vanilla bucket model with the fluid's color (black for crude oil). */
