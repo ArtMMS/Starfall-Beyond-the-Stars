@@ -20,6 +20,8 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.STAR_FRAGMENT_BLOCK.get());
         dropSelf(ModBlocks.FLUID_TANK.get());
         dropSelf(ModBlocks.OIL_EXTRACTOR.get());
+        dropSelf(ModBlocks.IRON_PIPE.get());
+        dropSelf(ModBlocks.STEEL_CRANK.get());
         // No loot table (noLootTable): CRUDE_OIL (liquid) and TAR_PATCH (drops nothing)
     }
 

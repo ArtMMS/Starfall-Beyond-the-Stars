@@ -2,6 +2,8 @@ package com.artmms.starfall;
 
 import org.joml.Vector3f;
 
+import com.artmms.starfall.block.entity.ModBlockEntities;
+import com.artmms.starfall.client.FluidTankRenderer;
 import com.artmms.starfall.fluid.ModFluids;
 import com.artmms.starfall.item.ModItems;
 import com.mojang.blaze3d.shaders.FogShape;
@@ -17,6 +19,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -88,6 +91,12 @@ public class StarfallClient {
                 RenderSystem.setShaderFogEnd(CRUDE_OIL_FOG_END);
             }
         }, ModFluids.CRUDE_OIL_TYPE.get());
+    }
+
+    /** Draws the liquid inside the Fluid Tank glass. */
+    @SubscribeEvent
+    static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK.get(), FluidTankRenderer::new);
     }
 
     /** Paints the liquid inside the vanilla bucket model with the fluid's color (black for crude oil). */

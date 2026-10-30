@@ -29,6 +29,8 @@ Starfall is about **exploration and fun**, not complex industry.
 3. Fuel your **rocket** and launch into space.
 4. Explore planets, survive their conditions and witness rare cosmic events.
 
+**There is no electricity in Starfall.** Machines work on their own (slowly) and can be sped up by hand.
+
 ### The rocket
 
 The rocket is controlled from a **GUI**, through **first-person hotkeys**, or by **talking to the onboard AI** (with a voice chat mod). You do not walk around inside it.
@@ -54,21 +56,43 @@ Every fuel in Starfall is converted into **Fuel Points (FP)**. FP is what your r
 
 ## 🛢️ Crude Oil
 
-A thick, black, flammable liquid found deep underground.
+A thick, black, flammable liquid found underground.
 
 ### Where to find it
 
-- **Underground pockets** in the Overworld, between **Y -40 and Y 20**.
-- Pockets are **rare** and hold about **50 to 300 buckets** each.
-- They form inside natural stone and deepslate, so you usually find them by mining or when a cave cuts through one.
+- **Underground pockets** in the Overworld, between **Y -16 and Y 56**.
+- About **1 pocket every 16 chunks**.
+- They form inside natural stone and deepslate, always with a few blocks of rock above them.
+
+### The deeper, the bigger
+
+| Depth | Size | Approx. buckets | Tar on the surface? |
+|---|---|---|---|
+| Shallow (Y 35 and up) | Small | ~25 to 70 | Never |
+| Medium (Y 15 to 34) | Medium | ~60 to 300 | Sometimes (30%) |
+| Deep (below Y 15) | Large | ~300 to 800 | **Always** |
+
+Shallow pockets are easy to reach but run out fast. The big ones are worth the dig.
 
 ### Tar Patches: the surface hint
 
-Sometimes a pocket leaves **Tar Patches** on the surface right above it: small, sticky black patches on the ground.
+**Large pockets** (and some medium ones) leave **Tar Patches** on the ground right above them: small, sticky black patches.
 
-> 💡 **Found a Tar Patch? Dig straight down!** There is an oil pocket somewhere below.
+> 💡 **Found a Tar Patch? Dig straight down!** A big oil pocket is right below.
 
-Tar Patches slow you down when you walk on them and can be picked up (any tool or by hand; a shovel is fastest).
+- Tar Patches slow you down when you walk on them.
+- They **drop nothing** when broken.
+- They only appear on dry land (not under water).
+
+### Finding pockets with /locate
+
+Oil pockets can be located like any structure:
+
+```
+/locate structure starfall:oil_pocket
+```
+
+It shows the coordinates of the nearest pocket (requires cheats/operator).
 
 ### How it behaves
 
@@ -78,7 +102,7 @@ Tar Patches slow you down when you walk on them and can be picked up (any tool o
 | 🔥 **Flammable** | Catches fire from fire, lava and lightning, and **burns away** |
 | 🕸️ **Sticky** | Slows down anything inside it |
 | 🫧 **Heavy** | Swimming is **very slow**, and you **can drown** |
-| 🪣 **Collectable** | Pick it up with a regular bucket |
+| 🪣 **Collectable** | Pick it up with a regular bucket (it becomes a bucket full of black oil) |
 
 > ⚠️ **Never bring fire or lava near an oil pocket.** An exposed pocket can burn for a long time.
 
@@ -179,10 +203,10 @@ All values can be changed in **Mods → Starfall: Beyond the Stars → Config**,
 
 ### World generation (modpacks / datapacks)
 
-How often oil pockets spawn is defined in a datapack file, so modpacks can change it:
+Oil pockets are a structure, so modpacks can change them with a datapack:
 
-- `data/starfall/worldgen/placed_feature/oil_pocket.json`: rarity (default: 1 pocket every ~24 chunks) and height range (Y -40 to 20).
-- `data/starfall/neoforge/biome_modifier/add_oil_pocket.json`: which biomes get pockets (default: all Overworld biomes).
+- `data/starfall/worldgen/structure_set/oil_pockets.json`: how often they spawn (`spacing` and `separation`, in chunks; default 4 and 2).
+- `data/starfall/worldgen/structure/oil_pocket.json`: which biomes get pockets (default: all Overworld biomes).
 
 ---
 

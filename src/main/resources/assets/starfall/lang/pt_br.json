@@ -1,28 +1,22 @@
 {
   "itemGroup.starfall": "Starfall: Beyond the Stars",
-
   "item.starfall.star_fragment": "Fragmento Estelar",
   "block.starfall.star_fragment_block": "Bloco de Fragmentos Estelares",
-
   "block.starfall.crude_oil": "Petróleo Bruto",
   "fluid_type.starfall.crude_oil": "Petróleo Bruto",
   "item.starfall.crude_oil_bucket": "Balde de Petróleo Bruto",
   "block.starfall.tar_patch": "Mancha de Piche",
   "block.starfall.fluid_tank": "Tanque de Fluidos",
   "block.starfall.oil_extractor": "Extrator de Petróleo",
-
   "message.starfall.star_fragment.hum": "O fragmento vibra com uma luz distante...",
-  "message.starfall.tank.empty": "Vazio (0 / %s mB)",
-  "message.starfall.tank.contents": "%s: %s / %s mB",
+  "message.starfall.tank.empty": "Vazio (0 / %s litros)",
+  "message.starfall.tank.contents": "%s: %s / %s litros",
   "message.starfall.fuel_points": " (%s FP)",
-  "message.starfall.extractor.status": "Extraindo... %s%% | Armazenado: %s / %s mB",
-  "message.starfall.extractor.no_oil": "Nenhum petróleo por perto | Armazenado: %s / %s mB",
-  "message.starfall.extractor.full": "Tanque interno cheio | Armazenado: %s / %s mB",
-
+  "message.starfall.extractor.status": "Extraindo... %s%% | Armazenado: %s / %s litros",
+  "message.starfall.extractor.full": "Tanque interno cheio | Armazenado: %s / %s litros",
   "starfall.configuration.title": "Configurações do Starfall",
   "starfall.configuration.section.starfall.common.toml": "Configurações do Starfall",
   "starfall.configuration.section.starfall.common.toml.title": "Configurações do Starfall",
-
   "starfall.configuration.events": "Eventos",
   "starfall.configuration.enableSpaceEvents": "Ativar eventos no espaço",
   "starfall.configuration.enableOverworldEvents": "Ativar eventos no Overworld",
@@ -33,21 +27,24 @@
   "starfall.configuration.fallingMeteorChance": "Chance de meteoro caindo",
   "starfall.configuration.alienAbductionChance": "Chance de abdução alienígena",
   "starfall.configuration.crashingShipChance": "Chance de nave caindo",
-
   "starfall.configuration.consumption": "Consumo",
   "starfall.configuration.fuelConsumption": "Consumo de combustível",
   "starfall.configuration.oxygenConsumption": "Consumo de oxigênio",
-
   "starfall.configuration.fuel": "Combustível",
   "starfall.configuration.crudeOilFuelPoints": "Petróleo bruto (FP por balde)",
-
   "starfall.configuration.machines": "Máquinas",
   "starfall.configuration.basicTankCapacity": "Capacidade do Tanque de Fluidos (mB)",
   "starfall.configuration.extractorCapacity": "Capacidade do Extrator (mB)",
   "starfall.configuration.extractorTicksPerBucket": "Velocidade do Extrator (ticks por balde)",
-  "starfall.configuration.extractorCrankBoost": "Bônus da manivela (ticks por giro)",
   "starfall.configuration.extractorRange": "Alcance do Extrator (blocos)",
-
   "starfall.configuration.difficulty": "Dificuldade",
-  "starfall.configuration.moduleDamage": "Dano nas peças do foguete"
+  "starfall.configuration.moduleDamage": "Dano nas peças do foguete",
+  "block.starfall.iron_pipe": "Cano de Ferro",
+  "block.starfall.steel_crank": "Manivela de Aço",
+  "message.starfall.extractor.no_fluid": "Nenhum líquido por perto | Armazenado: %s / %s litros",
+  "message.starfall.crank.pumped": "Bombeou %s litros para %s tanque(s)",
+  "message.starfall.crank.no_extractor": "Nenhum extrator conectado aos canos",
+  "message.starfall.crank.no_tank": "Nenhum Tanque de Fluidos conectado aos canos",
+  "message.starfall.crank.nothing": "Nada para bombear: tanques cheios, com outro líquido, ou a fonte acabou",
+  "starfall.configuration.crankPumpAmount": "Bombeamento da manivela (mB por tanque)"
 }

@@ -58,5 +58,25 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('B', Items.BUCKET)
                 .unlockedBy("has_bucket", has(Items.BUCKET))
                 .save(output);
+
+        // ===== Pipes =====
+        // Iron Pipe: 3 iron ingots stacked vertically -> 3 pipes
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.IRON_PIPE.get(), 3)
+                .pattern("I")
+                .pattern("I")
+                .pattern("I")
+                .define('I', Items.IRON_INGOT)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(output);
+
+        // Steel Crank: iron handle on top of a pipe
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.STEEL_CRANK.get())
+                .pattern("III")
+                .pattern(" I ")
+                .pattern(" P ")
+                .define('I', Items.IRON_INGOT)
+                .define('P', ModBlocks.IRON_PIPE.get())
+                .unlockedBy("has_iron_pipe", has(ModBlocks.IRON_PIPE.get()))
+                .save(output);
     }
 }

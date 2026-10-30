@@ -48,12 +48,14 @@ public final class ModBlocks {
                     .noLootTable()));
 
     // ===== Fuel machines =====
+    /** noOcclusion: the glass is see-through, so the liquid inside can be drawn. */
     public static final DeferredBlock<FluidTankBlock> FLUID_TANK = registerBlock("fluid_tank",
             () -> new FluidTankBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.METAL)
                     .strength(3.0F, 6.0F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.METAL)));
+                    .sound(SoundType.METAL)
+                    .noOcclusion()));
 
     public static final DeferredBlock<OilExtractorBlock> OIL_EXTRACTOR = registerBlock("oil_extractor",
             () -> new OilExtractorBlock(BlockBehaviour.Properties.of()
@@ -61,6 +63,22 @@ public final class ModBlocks {
                     .strength(3.5F, 6.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)));
+
+    // ===== Pipes =====
+    public static final DeferredBlock<IronPipeBlock> IRON_PIPE = registerBlock("iron_pipe",
+            () -> new IronPipeBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(2.0F, 6.0F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()));
+
+    /** The pump of the pipe network. */
+    public static final DeferredBlock<SteelCrankBlock> STEEL_CRANK = registerBlock("steel_crank",
+            () -> new SteelCrankBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(2.5F, 6.0F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()));
 
     private ModBlocks() {
     }

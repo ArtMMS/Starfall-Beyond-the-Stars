@@ -3,6 +3,7 @@ package com.artmms.starfall.block;
 import javax.annotation.Nullable;
 
 import com.artmms.starfall.block.entity.FluidTankBlockEntity;
+import com.artmms.starfall.fluid.FluidSpill;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -17,12 +18,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 /**
  * Fluid Tank block.
  * - Right-click with a bucket: fills or empties the bucket
  * - Right-click with an empty hand: shows the contents
+ * - Breaking it spills the contents around it
  */
 public class FluidTankBlock extends Block implements EntityBlock {
     public FluidTankBlock(Properties properties) {
@@ -57,5 +60,16 @@ public class FluidTankBlock extends Block implements EntityBlock {
             player.displayClientMessage(tank.describe(), true);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    /** Breaking the tank spills what was inside. */
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof FluidTankBlockEntity tank) {
+            FluidStack contents = tank.getTank().getFluid().copy();
+            tank.getTank().setFluid(FluidStack.EMPTY);
+            FluidSpill.spill(level, pos, contents);
+        }
+        return super.playerWillDestroy(level, pos, state, player);
     }
 }

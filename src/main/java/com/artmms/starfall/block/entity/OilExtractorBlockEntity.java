@@ -7,7 +7,8 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.artmms.starfall.config.StarfallConfig;
-import com.artmms.starfall.fluid.ModFluids;
+import com.artmms.starfall.fluid.FluidUnits;
+import com.artmms.starfall.tag.ModTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,8 +17,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -26,25 +29,28 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 /**
- * Oil Extractor: pulls crude oil from the pocket it touches, 1 bucket at a time.
- * - Works for free, but slowly
- * - Turning the crank (right-click) speeds it up
+ * Oil Extractor: pulls fluid from the pool or pocket it touches, 1 bucket at a time.
+ * Works with crude oil, water and lava (whatever it is placed in).
+ * - Fills its internal tank by itself, slowly
+ * - The Steel Crank pumps from it through Iron Pipes (and straight from the pocket when the internal tank is empty)
  * - Removes the source blocks, so pockets run out
- * - Pushes oil into neighboring tanks automatically
+ * - Also pushes fluid into tanks touching it
  */
 public class OilExtractorBlockEntity extends BlockEntity {
     private static final String TANK_TAG = "Tank";
     private static final String PROGRESS_TAG = "Progress";
     /** Safety limit for the pocket scan. */
     private static final int MAX_SCANNED_BLOCKS = 4096;
-    /** How often it tries to push oil into neighbors (ticks). */
+    /** How often it tries to push fluid into neighbors (ticks). */
     private static final int PUSH_INTERVAL = 20;
+    /** Safety limit for one pump call. */
+    private static final int MAX_PUMP_STEPS = 64;
 
     private final OutputOnlyTank tank = new OutputOnlyTank(StarfallConfig.EXTRACTOR_CAPACITY.get(),
-            stack -> stack.getFluid().isSame(ModFluids.CRUDE_OIL.get()), this::setChanged);
+            stack -> stack.is(ModTags.Fluids.BASIC_TANK_FLUIDS), this::setChanged);
 
     private int progress;
-    private boolean noOil;
+    private boolean noFluid;
 
     public OilExtractorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.OIL_EXTRACTOR.get(), pos, state);
@@ -76,54 +82,84 @@ public class OilExtractorBlockEntity extends BlockEntity {
         setChanged();
     }
 
-    /** Called when a player turns the crank. */
-    public void crank() {
-        if (tank.getSpace() >= FluidType.BUCKET_VOLUME) {
-            progress = Math.min(progress + StarfallConfig.EXTRACTOR_CRANK_BOOST.get(), ticksPerBucket());
-            setChanged();
+    /**
+     * Moves up to {@code max} mB into the target (used by the Steel Crank).
+     * Takes from the internal tank first, then straight from the pocket.
+     *
+     * @return how much was moved, in mB
+     */
+    public int pumpInto(IFluidHandler target, int max) {
+        int moved = 0;
+        for (int step = 0; step < MAX_PUMP_STEPS && moved < max; step++) {
+            if (tank.isEmpty() && !extractOneBucket()) {
+                break; // pocket is empty
+            }
+
+            FluidStack available = tank.getFluid();
+            int wanted = Math.min(max - moved, available.getAmount());
+            int accepted = target.fill(available.copyWithAmount(wanted), IFluidHandler.FluidAction.SIMULATE);
+            if (accepted <= 0) {
+                break; // target full or holds another fluid
+            }
+
+            FluidStack drained = tank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
+            target.fill(drained, IFluidHandler.FluidAction.EXECUTE);
+            moved += drained.getAmount();
         }
+        return moved;
     }
 
     public Component describe() {
+        String stored = FluidUnits.liters(tank.getFluidAmount());
+        String capacity = FluidUnits.liters(tank.getCapacity());
+
         if (tank.getSpace() < FluidType.BUCKET_VOLUME) {
-            return Component.translatable("message.starfall.extractor.full",
-                    tank.getFluidAmount(), tank.getCapacity());
+            return Component.translatable("message.starfall.extractor.full", stored, capacity);
         }
-        if (noOil) {
-            return Component.translatable("message.starfall.extractor.no_oil",
-                    tank.getFluidAmount(), tank.getCapacity());
+        if (noFluid) {
+            return Component.translatable("message.starfall.extractor.no_fluid", stored, capacity);
         }
         int percent = progress * 100 / ticksPerBucket();
-        return Component.translatable("message.starfall.extractor.status",
-                percent, tank.getFluidAmount(), tank.getCapacity());
+        return Component.translatable("message.starfall.extractor.status", percent, stored, capacity);
     }
 
     private int ticksPerBucket() {
         return Math.max(1, StarfallConfig.EXTRACTOR_TICKS_PER_BUCKET.get());
     }
 
-    private void extractOneBucket() {
-        BlockPos source = findOilSource();
-        if (source == null) {
-            noOil = true;
-            return;
+    /** Removes one source block from the pocket and stores 1 bucket. */
+    private boolean extractOneBucket() {
+        if (level == null || tank.getSpace() < FluidType.BUCKET_VOLUME) {
+            return false;
         }
 
-        noOil = false;
+        Fluid wanted = tank.isEmpty() ? null : tank.getFluid().getFluid();
+        BlockPos source = findSource(wanted);
+        if (source == null) {
+            noFluid = true;
+            return false;
+        }
+
+        Fluid fluid = level.getFluidState(source).getType();
+        noFluid = false;
         level.setBlock(source, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-        tank.fillInternal(new FluidStack(ModFluids.CRUDE_OIL.get(), FluidType.BUCKET_VOLUME));
+        tank.fillInternal(new FluidStack(fluid, FluidType.BUCKET_VOLUME));
+        return true;
     }
 
     /**
-     * Walks through the oil connected to the extractor and returns the highest
+     * Walks through the fluid connected to the extractor and returns the highest
      * source block, so the pocket drains from the top down.
+     *
+     * @param wanted the fluid already stored (only that one is taken), or null for any
      */
     @Nullable
-    private BlockPos findOilSource() {
+    private BlockPos findSource(@Nullable Fluid wanted) {
         int range = StarfallConfig.EXTRACTOR_RANGE.get();
         Set<BlockPos> visited = new HashSet<>();
         ArrayDeque<BlockPos> queue = new ArrayDeque<>();
         BlockPos best = null;
+        Fluid target = wanted;
 
         for (Direction direction : Direction.values()) {
             BlockPos next = worldPosition.relative(direction);
@@ -138,8 +174,18 @@ public class OilExtractorBlockEntity extends BlockEntity {
                 continue;
             }
 
+            // Only real liquid blocks (never waterlogged blocks)
+            if (!(level.getBlockState(pos).getBlock() instanceof LiquidBlock)) {
+                continue;
+            }
+
             FluidState fluid = level.getFluidState(pos);
-            if (!fluid.getType().isSame(ModFluids.CRUDE_OIL.get())) {
+            if (fluid.isEmpty() || !fluid.getType().is(ModTags.Fluids.BASIC_TANK_FLUIDS)) {
+                continue;
+            }
+            if (target == null) {
+                target = fluid.getType();
+            } else if (!fluid.getType().isSame(target)) {
                 continue;
             }
 
@@ -164,7 +210,7 @@ public class OilExtractorBlockEntity extends BlockEntity {
                 && Math.abs(pos.getZ() - worldPosition.getZ()) <= range;
     }
 
-    /** Sends oil to any neighbor that accepts fluids (Starfall tanks, other mods' tanks, pipes). */
+    /** Sends fluid to any neighbor that accepts it (Starfall tanks, other mods' tanks). */
     private void pushToNeighbors() {
         for (Direction direction : Direction.values()) {
             if (tank.isEmpty()) {

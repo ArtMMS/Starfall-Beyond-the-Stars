@@ -26,10 +26,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.TAR_PATCH.get(),
                 models().carpet("tar_patch", modLoc("block/tar_patch")));
 
+        // Cutout: the glass window is transparent so the liquid inside shows
         simpleBlockWithItem(ModBlocks.FLUID_TANK.get(),
                 models().cubeColumn("fluid_tank",
                         modLoc("block/fluid_tank_side"),
-                        modLoc("block/fluid_tank_top")));
+                        modLoc("block/fluid_tank_top"))
+                        .renderType("cutout"));
+
+        // IRON_PIPE and STEEL_CRANK have hand-written models in assets/starfall/blockstates
 
         simpleBlockWithItem(ModBlocks.OIL_EXTRACTOR.get(),
                 models().cubeBottomTop("oil_extractor",

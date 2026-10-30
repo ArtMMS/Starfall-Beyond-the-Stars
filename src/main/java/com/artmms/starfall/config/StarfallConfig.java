@@ -31,7 +31,7 @@ public final class StarfallConfig {
     public static final ModConfigSpec.IntValue BASIC_TANK_CAPACITY;
     public static final ModConfigSpec.IntValue EXTRACTOR_CAPACITY;
     public static final ModConfigSpec.IntValue EXTRACTOR_TICKS_PER_BUCKET;
-    public static final ModConfigSpec.IntValue EXTRACTOR_CRANK_BOOST;
+    public static final ModConfigSpec.IntValue CRANK_PUMP_AMOUNT;
     public static final ModConfigSpec.IntValue EXTRACTOR_RANGE;
 
     // ===== Difficulty =====
@@ -96,11 +96,11 @@ public final class StarfallConfig {
         EXTRACTOR_TICKS_PER_BUCKET = builder
                 .comment("Ticks the Oil Extractor takes to pull 1 bucket by itself. 20 ticks = 1 second")
                 .defineInRange("extractorTicksPerBucket", 200, 1, 72000);
-        EXTRACTOR_CRANK_BOOST = builder
-                .comment("Extra progress (in ticks) each crank turn adds to the Oil Extractor")
-                .defineInRange("extractorCrankBoost", 20, 0, 72000);
+        CRANK_PUMP_AMOUNT = builder
+                .comment("How much each Steel Crank turn pumps into every connected tank, in mB (1000 = 1 bucket)")
+                .defineInRange("crankPumpAmount", 1000, 1, 100000);
         EXTRACTOR_RANGE = builder
-                .comment("How far (in blocks) the Oil Extractor reaches into a connected oil pocket")
+                .comment("How far (in blocks) the Oil Extractor reaches into a connected pocket or pool")
                 .defineInRange("extractorRange", 8, 1, 32);
         builder.pop();
 
