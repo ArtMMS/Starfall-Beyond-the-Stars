@@ -4,7 +4,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
  * Starfall configuration, saved as config/starfall-common.toml.
- * Chances are rolled once per event check (see eventCheckInterval).
+ * Also editable in game: Mods > Starfall > Config.
  */
 public final class StarfallConfig {
     public static final ModConfigSpec SPEC;
@@ -22,8 +22,17 @@ public final class StarfallConfig {
 
     // ===== Consumption =====
     public static final ModConfigSpec.DoubleValue FUEL_CONSUMPTION;
-    public static final ModConfigSpec.DoubleValue ENERGY_CONSUMPTION;
     public static final ModConfigSpec.DoubleValue OXYGEN_CONSUMPTION;
+
+    // ===== Fuel (fuel points per 1000 mB / 1 bucket) =====
+    public static final ModConfigSpec.IntValue CRUDE_OIL_FUEL_POINTS;
+
+    // ===== Machines =====
+    public static final ModConfigSpec.IntValue BASIC_TANK_CAPACITY;
+    public static final ModConfigSpec.IntValue EXTRACTOR_CAPACITY;
+    public static final ModConfigSpec.IntValue EXTRACTOR_TICKS_PER_BUCKET;
+    public static final ModConfigSpec.IntValue EXTRACTOR_CRANK_BOOST;
+    public static final ModConfigSpec.IntValue EXTRACTOR_RANGE;
 
     // ===== Difficulty =====
     public static final ModConfigSpec.EnumValue<StarfallDifficulty> DIFFICULTY;
@@ -64,14 +73,35 @@ public final class StarfallConfig {
 
         builder.comment("Resource consumption multipliers (1.0 = default)").push("consumption");
         FUEL_CONSUMPTION = builder
-                .comment("Ship fuel consumption multiplier")
+                .comment("Rocket fuel consumption multiplier")
                 .defineInRange("fuelConsumption", 1.0, 0.0, 10.0);
-        ENERGY_CONSUMPTION = builder
-                .comment("Ship and machine energy consumption multiplier")
-                .defineInRange("energyConsumption", 1.0, 0.0, 10.0);
         OXYGEN_CONSUMPTION = builder
                 .comment("Space suit oxygen consumption multiplier")
                 .defineInRange("oxygenConsumption", 1.0, 0.0, 10.0);
+        builder.pop();
+
+        builder.comment("Fuel Points (FP) each fuel gives per bucket (1000 mB)").push("fuel");
+        CRUDE_OIL_FUEL_POINTS = builder
+                .comment("Fuel Points per bucket of crude oil")
+                .defineInRange("crudeOilFuelPoints", 100, 0, 100000);
+        builder.pop();
+
+        builder.comment("Machines and storage").push("machines");
+        BASIC_TANK_CAPACITY = builder
+                .comment("Capacity of the Fluid Tank, in mB (1000 mB = 1 bucket)")
+                .defineInRange("basicTankCapacity", 16000, 1000, 1000000);
+        EXTRACTOR_CAPACITY = builder
+                .comment("Internal tank of the Oil Extractor, in mB")
+                .defineInRange("extractorCapacity", 4000, 1000, 100000);
+        EXTRACTOR_TICKS_PER_BUCKET = builder
+                .comment("Ticks the Oil Extractor takes to pull 1 bucket by itself. 20 ticks = 1 second")
+                .defineInRange("extractorTicksPerBucket", 200, 1, 72000);
+        EXTRACTOR_CRANK_BOOST = builder
+                .comment("Extra progress (in ticks) each crank turn adds to the Oil Extractor")
+                .defineInRange("extractorCrankBoost", 20, 0, 72000);
+        EXTRACTOR_RANGE = builder
+                .comment("How far (in blocks) the Oil Extractor reaches into a connected oil pocket")
+                .defineInRange("extractorRange", 8, 1, 32);
         builder.pop();
 
         builder.comment("General difficulty settings").push("difficulty");
@@ -79,7 +109,7 @@ public final class StarfallConfig {
                 .comment("Overall Starfall difficulty: EASY, NORMAL or HARD")
                 .defineEnum("difficulty", StarfallDifficulty.NORMAL);
         MODULE_DAMAGE = builder
-                .comment("Damage multiplier applied to ship modules")
+                .comment("Damage multiplier applied to rocket parts")
                 .defineInRange("moduleDamage", 1.0, 0.0, 10.0);
         builder.pop();
 

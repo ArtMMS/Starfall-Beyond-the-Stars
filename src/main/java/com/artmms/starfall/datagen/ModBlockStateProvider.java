@@ -18,6 +18,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         cubeAllWithItem(ModBlocks.STAR_FRAGMENT_BLOCK);
+
+        // Liquid block: only needs a particle texture (the fluid renderer draws the rest)
+        simpleBlock(ModBlocks.CRUDE_OIL.get(), models().getBuilder("crude_oil")
+                .texture("particle", mcLoc("block/water_still")));
+
+        simpleBlockWithItem(ModBlocks.TAR_PATCH.get(),
+                models().carpet("tar_patch", modLoc("block/tar_patch")));
+
+        simpleBlockWithItem(ModBlocks.FLUID_TANK.get(),
+                models().cubeColumn("fluid_tank",
+                        modLoc("block/fluid_tank_side"),
+                        modLoc("block/fluid_tank_top")));
+
+        simpleBlockWithItem(ModBlocks.OIL_EXTRACTOR.get(),
+                models().cubeBottomTop("oil_extractor",
+                        modLoc("block/oil_extractor_side"),
+                        modLoc("block/oil_extractor_bottom"),
+                        modLoc("block/oil_extractor_top")));
     }
 
     /** Simple full block with the same texture on every face (textures/block/NAME.png). */

@@ -4,7 +4,20 @@
   "item.starfall.star_fragment": "Star Fragment",
   "block.starfall.star_fragment_block": "Block of Star Fragments",
 
+  "block.starfall.crude_oil": "Crude Oil",
+  "fluid_type.starfall.crude_oil": "Crude Oil",
+  "item.starfall.crude_oil_bucket": "Crude Oil Bucket",
+  "block.starfall.tar_patch": "Tar Patch",
+  "block.starfall.fluid_tank": "Fluid Tank",
+  "block.starfall.oil_extractor": "Oil Extractor",
+
   "message.starfall.star_fragment.hum": "The fragment hums with a distant light...",
+  "message.starfall.tank.empty": "Empty (0 / %s mB)",
+  "message.starfall.tank.contents": "%s: %s / %s mB",
+  "message.starfall.fuel_points": " (%s FP)",
+  "message.starfall.extractor.status": "Extracting... %s%% | Stored: %s / %s mB",
+  "message.starfall.extractor.no_oil": "No crude oil nearby | Stored: %s / %s mB",
+  "message.starfall.extractor.full": "Internal tank full | Stored: %s / %s mB",
 
   "starfall.configuration.title": "Starfall Settings",
   "starfall.configuration.section.starfall.common.toml": "Starfall Settings",
@@ -23,9 +36,18 @@
 
   "starfall.configuration.consumption": "Consumption",
   "starfall.configuration.fuelConsumption": "Fuel Consumption",
-  "starfall.configuration.energyConsumption": "Energy Consumption",
   "starfall.configuration.oxygenConsumption": "Oxygen Consumption",
 
+  "starfall.configuration.fuel": "Fuel",
+  "starfall.configuration.crudeOilFuelPoints": "Crude Oil (FP per bucket)",
+
+  "starfall.configuration.machines": "Machines",
+  "starfall.configuration.basicTankCapacity": "Fluid Tank Capacity (mB)",
+  "starfall.configuration.extractorCapacity": "Oil Extractor Capacity (mB)",
+  "starfall.configuration.extractorTicksPerBucket": "Oil Extractor Speed (ticks per bucket)",
+  "starfall.configuration.extractorCrankBoost": "Crank Boost (ticks per turn)",
+  "starfall.configuration.extractorRange": "Oil Extractor Range (blocks)",
+
   "starfall.configuration.difficulty": "Difficulty",
-  "starfall.configuration.moduleDamage": "Ship Module Damage"
+  "starfall.configuration.moduleDamage": "Rocket Part Damage"
 }

@@ -16,5 +16,6 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.STAR_FRAGMENT.get());
+        basicItem(ModItems.CRUDE_OIL_BUCKET.get());
     }
 }

@@ -21,9 +21,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.STAR_FRAGMENT_BLOCK.get());
+                .add(ModBlocks.STAR_FRAGMENT_BLOCK.get())
+                .add(ModBlocks.FLUID_TANK.get())
+                .add(ModBlocks.OIL_EXTRACTOR.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.STAR_FRAGMENT_BLOCK.get());
+
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(ModBlocks.TAR_PATCH.get());
     }
 }
