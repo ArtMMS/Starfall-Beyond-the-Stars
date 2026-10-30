@@ -18,10 +18,9 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(ModBlocks.STAR_FRAGMENT_BLOCK.get());
-        dropSelf(ModBlocks.TAR_PATCH.get());
         dropSelf(ModBlocks.FLUID_TANK.get());
         dropSelf(ModBlocks.OIL_EXTRACTOR.get());
-        // CRUDE_OIL is a liquid and has no loot table (noLootTable)
+        // No loot table (noLootTable): CRUDE_OIL (liquid) and TAR_PATCH (drops nothing)
     }
 
     /** Every Starfall block must have a loot table, or datagen fails (on purpose). */

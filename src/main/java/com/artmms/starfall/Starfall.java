@@ -11,7 +11,7 @@ import com.artmms.starfall.item.ModCreativeTabs;
 import com.artmms.starfall.item.ModItems;
 import com.artmms.starfall.menu.ModMenus;
 import com.artmms.starfall.sound.ModSounds;
-import com.artmms.starfall.world.ModFeatures;
+import com.artmms.starfall.world.ModStructures;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +40,7 @@ public class Starfall {
         ModSounds.register(modEventBus);
         ModFluids.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
-        ModFeatures.register(modEventBus);
+        ModStructures.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, StarfallConfig.SPEC);
 

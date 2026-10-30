@@ -1,7 +1,15 @@
 package com.artmms.starfall;
 
-import com.artmms.starfall.fluid.ModFluids;
+import org.joml.Vector3f;
 
+import com.artmms.starfall.fluid.ModFluids;
+import com.artmms.starfall.item.ModItems;
+import com.mojang.blaze3d.shaders.FogShape;
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -9,10 +17,12 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 
 /**
  * Client-only entry point. This class never loads on a dedicated server,
@@ -26,6 +36,11 @@ public class StarfallClient {
     private static final ResourceLocation WATER_FLOW = ResourceLocation.withDefaultNamespace("block/water_flow");
     private static final ResourceLocation WATER_OVERLAY = ResourceLocation.withDefaultNamespace("block/water_overlay");
     private static final int CRUDE_OIL_COLOR = 0xFF17130F;
+
+    /** Fog when the camera is inside crude oil: almost black and very close, like lava. */
+    private static final Vector3f CRUDE_OIL_FOG_COLOR = new Vector3f(0.02F, 0.015F, 0.01F);
+    private static final float CRUDE_OIL_FOG_START = 0.0F;
+    private static final float CRUDE_OIL_FOG_END = 1.5F;
 
     public StarfallClient(ModContainer container) {
         // Config screen: Mods > Starfall > Config
@@ -59,6 +74,25 @@ public class StarfallClient {
             public int getTintColor() {
                 return CRUDE_OIL_COLOR;
             }
+
+            @Override
+            public Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level,
+                                           int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {
+                return CRUDE_OIL_FOG_COLOR;
+            }
+
+            @Override
+            public void modifyFogRender(Camera camera, FogRenderer.FogMode mode, float renderDistance,
+                                        float partialTick, float nearDistance, float farDistance, FogShape shape) {
+                RenderSystem.setShaderFogStart(CRUDE_OIL_FOG_START);
+                RenderSystem.setShaderFogEnd(CRUDE_OIL_FOG_END);
+            }
         }, ModFluids.CRUDE_OIL_TYPE.get());
+    }
+
+    /** Paints the liquid inside the vanilla bucket model with the fluid's color (black for crude oil). */
+    @SubscribeEvent
+    static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register(new DynamicFluidContainerModel.Colors(), ModItems.CRUDE_OIL_BUCKET.get());
     }
 }

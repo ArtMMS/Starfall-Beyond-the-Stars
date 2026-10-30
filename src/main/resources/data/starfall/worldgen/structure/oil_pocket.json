@@ -1,0 +1,7 @@
+{
+  "type": "starfall:oil_pocket",
+  "biomes": "#minecraft:is_overworld",
+  "step": "underground_structures",
+  "terrain_adaptation": "none",
+  "spawn_overrides": {}
+}

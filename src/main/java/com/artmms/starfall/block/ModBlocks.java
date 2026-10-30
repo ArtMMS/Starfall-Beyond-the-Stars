@@ -37,14 +37,15 @@ public final class ModBlocks {
                     .ignitedByLava()
                     .noLootTable()));
 
-    /** Surface hint: a sticky patch that appears above some oil pockets. */
+    /** Surface hint: a sticky patch that appears above big oil pockets. Drops nothing. */
     public static final DeferredBlock<CarpetBlock> TAR_PATCH = registerBlock("tar_patch",
             () -> new CarpetBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BLACK)
                     .strength(0.3F)
                     .sound(SoundType.HONEY_BLOCK)
                     .speedFactor(0.5F)
-                    .jumpFactor(0.6F)));
+                    .jumpFactor(0.6F)
+                    .noLootTable()));
 
     // ===== Fuel machines =====
     public static final DeferredBlock<FluidTankBlock> FLUID_TANK = registerBlock("fluid_tank",

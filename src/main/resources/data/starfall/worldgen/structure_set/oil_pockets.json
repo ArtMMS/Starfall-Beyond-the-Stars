@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "starfall:oil_pocket",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 4,
+    "separation": 2,
+    "salt": 184736251
+  }
+}
